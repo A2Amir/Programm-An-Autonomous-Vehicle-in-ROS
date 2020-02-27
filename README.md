@@ -79,3 +79,9 @@ The dbw_node subscribes to the **/current_velocity topic** along with the **/twi
 <p align="center">
 <img src="./img/4.png" alt="twist_controller" />
 <p align="center">
+
+In addition to these packages will find in this directory the following
+* /ros/src/styx/: A package that contains a server for communicating with the simulator, and a bridge to translate and publish simulator messages to ROS topics.
+* /ros/src/styx_msgs/:A package which includes definitions of the custom ROS message types used in the project.
+* /ros/src/waypoint_loader/:A package which loads the static waypoint data and publishes to /base_waypoints.
+* /ros/src/waypoint_follower/:A package containing code from Autoware which subscribes to /final_waypoints and publishes target vehicle linear and angular velocities in the form of twist commands to the /twist_cmd topic. 
