@@ -1,4 +1,4 @@
-# Introduction
+# 1. Introduction
 The goal of this project is to enable Karla (the Udacity’ car) to drive around the test track using waypoint navigation.  I'll be implementing components of the perception,planning, and control subsystems.
 
 * In the perception subsystem, I'll implement traffic light detection and obstacle detection.
@@ -19,7 +19,7 @@ The project will require the use of Ubuntu Linux (the operating system of Carla)
     Note: Please use the VM provided in **the [Introduction to ROS](https://github.com/A2Amir/Introduction-to-ROS--Robot-Operating-System) lesson**. The provided VM has ROS and Dataspeed DBW installed already.
 
 2. The project repo can be found [here](https://github.com/udacity/CarND-Capstone). In the README, you should be able find any additional dependencies needed for the project.
-3. From the the VM provided in **the [Introduction to ROS](https://github.com/A2Amir/Introduction-to-ROS--Robot-Operating-System) lesson** you can download the linux  version of the simulator [here](https://github.com/udacity/CarND-Capstone/releases) and install it. 
+3. Within the the VM provided in **the [Introduction to ROS](https://github.com/A2Amir/Introduction-to-ROS--Robot-Operating-System) lesson** you can download the linux  version of the simulator [here](https://github.com/udacity/CarND-Capstone/releases) and install it. 
     
     Note that the latest version of the simulator has two test tracks: 
     
@@ -27,7 +27,26 @@ The project will require the use of Ubuntu Linux (the operating system of Carla)
           A testing lot test track similar to where the Udacity team will run Carla
     
     To use the second test lot, you will need to update your code to specify a new set of waypoints. I'll discuss how to do this in a later lesson. Additionally, the first track has a toggle button for camera data. Finally, the simulator displays vehicle velocity in units of mph. However, all values used within the project code use the metric system (m or m/s), including current velocity data coming from the simulator.
-    
+4. Clone this project repository
+
+          mkdir CarND-Capstone
+          cd CarND-Capstone/
+          git clone https://github.com/A2Amir/Program-an-Autonomous-Vehicle.git
+
+5. Install python dependencies
+
+          pip install -r requirements.txt
+          
+6. Make and run styx
+
+          cd ros
+          catkin_make
+          source devel/setup.sh
+          roslaunch launch/styx.launch
+
+7. Run the simulator
+
+
 # 2. Project Overview
 
 For this project, I will be writing ROS nodes to implement core functionality of the autonomous vehicle system, including traffic light detection, control, and waypoint following and I will test my code using the simulator.
@@ -89,3 +108,36 @@ The dbw_node subscribes to the **/current_velocity topic** along with the **/twi
 * /ros/src/waypoint_loader/:A package which loads the static waypoint data and publishes to /base_waypoints.
 
 * /ros/src/waypoint_follower/:A package containing code from [Autoware](https://github.com/CPFL/Autoware) which subscribes to /final_waypoints and publishes target vehicle linear and angular velocities in the form of twist commands to the /twist_cmd topic. 
+
+
+# 3. Suggested Order of Project Development
+Because I will be writing code across several packages with some nodes depending on messages published by other nodes, I completed the project in the following order:
+<b>
+1. Waypoint Updater Node (Partial): I Completed a partial waypoint updater which subscribes to /base_waypoints and /current_pose and publishes to /final_waypoints.       
+2. DBW Node: Once my waypoint updater is publishing /final_waypoints, the waypoint_follower node will start publishing messages to the/twist_cmd topic. At this point,I have everything needed to build the dbw_node. After completing this step, the car should drive in the simulator, ignoring the traffic lights.
+3. Traffic Light Detection: This can be split into 2 parts:
+    * Detection: Detect the traffic light and its color from the /image_color. The topic /vehicle/traffic_lights contains the exact location and status of all traffic lights in simulator, so I can test my output.
+    * Waypoint publishing: Once I have correctly identified the traffic light and determined its position, you can convert it to a waypoint index and publish it.        
+4. Waypoint Updater (Full): Use /traffic_waypoint to change the waypoint target velocities before publishing to /final_waypoints. My car should now stop at red traffic lights and move when they are green.
+</b>
+In the next section, I'll cover each component of the project.
+
+## 3.1 Waypoint Updater Node (Partial)
+
+The goal for the first version of the node should be simply to subscribe to the topics 
+
+          /base_waypoints 
+          /current_pose
+          
+and publish a list of waypoints to 
+
+          /final_waypoints
+          
+The /base_waypoints topic publishes a list of all waypoints for the track, so this list includes waypoints both before and after the vehicle (note that the publisher for /base_waypoints publishes only once). For this step in the project, the list published to /final_waypoints should include just a fixed number of waypoints currently ahead of the vehicle:
+
+* The first waypoint in the list published to /final_waypoints should be the first waypoint that is currently ahead of the car. 
+* The total number of waypoints ahead of the vehicle that should be included in the /final_waypoints list is provided by the LOOKAHEAD_WPS variable in waypoint_updater.py.
+          
+The next section includes details about the message type used to publish to /final_waypoints.
+
+### Waypoint Message Descriptions
