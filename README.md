@@ -28,3 +28,24 @@ The project will require the use of Ubuntu Linux (the operating system of Carla)
           A testing lot test track similar to where the Udacity team will run Carla
     
     To use the second test lot, you will need to update your code to specify a new set of waypoints. I'll discuss how to do this in a later lesson. Additionally, the first track has a toggle button for camera data. Finally, the simulator displays vehicle velocity in units of mph. However, all values used within the project code use the metric system (m or m/s), including current velocity data coming from the simulator.
+    
+# 2. Project Overview
+
+For this project, I will be writing ROS nodes to implement core functionality of the autonomous vehicle system, including traffic light detection, control, and waypoint following and I will test my code using the simulator.
+
+### System Architecture Diagram
+
+The following is a system architecture diagram showing the ROS nodes and topics used in the project. (I refer to the diagram throughout the project). The ROS nodes and topics shown in the diagram are described briefly in the **Code Structure** section below and more detail is provided for each node later.
+
+<p align="center">
+<img src="./img/1.png" alt="System Architecture Diagram" />
+<p align="center">
+          
+          
+### Code Structure
+Below is a brief overview of the repo structure, along with descriptions of the ROS nodes. Within this directory /ros/src/, you will find the following ROS packages:
+
+
+#### /ros/src/tl_detector/
+
+
