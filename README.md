@@ -14,7 +14,6 @@ The project will require the use of Ubuntu Linux (the operating system of Carla)
 1. Because ROS is used, you will need to use Ubuntu to develop and test this project code. You may use
 
           Ubuntu 14.04 with ROS Indigo 
-
           Ubuntu 16.04 with ROS Kinetic
      
     Note: Please use the VM provided in **the [Introduction to ROS](https://github.com/A2Amir/Introduction-to-ROS--Robot-Operating-System) lesson**. The provided VM has ROS and Dataspeed DBW installed already.
@@ -48,4 +47,24 @@ Below is a brief overview of the repo structure, along with descriptions of the 
 
 #### /ros/src/tl_detector/
 
+This package contains the traffic light detection node: **tl_detector.py**. This node takes in data from the **/image_color, /current_pose, and /base_waypoints topics** and publishes the locations to stop for red traffic lights to the **/traffic_waypoint topic**.
+The **/current_pose** topic provides the vehicle's current position, and **/base_waypoints** provides a complete list of waypoints the car will be following.
 
+l build both a traffic light detection node and a traffic light classification node. Traffic light detection takes place within **tl_detector.py**, whereas traffic light classification takes place within **../tl_detector/light_classification_model/tl_classfier.py**
+
+
+<p align="center">
+<img src="./img/2.png" alt="traffic light detection node" />
+<p align="center">
+          
+          
+          
+#### /ros/src/waypoint_updater/
+This package contains the waypoint updater node: **waypoint_updater.py**. The purpose of this node is to update the target velocity property of each waypoint based on traffic light and obstacle detection data. This node will subscribe to **the /base_waypoints, /current_pose, /obstacle_waypoint, and /traffic_waypoint **topics, and publish a list of waypoints ahead of the car with target velocities to **the /final_waypoints** topic.
+
+
+<p align="center">
+<img src="./img/3.png" alt="waypoint_updater node" />
+<p align="center">
+          
+Note: Waypoints are simply an ordered set of coordinates that Karla uses to plan a path around the track. Each of these waypoints also has an associated target velocity. Karla's planning subsystem updates the target velocity for the waypoints ahead of the vehicle depending on the desired vehicle behavior.
