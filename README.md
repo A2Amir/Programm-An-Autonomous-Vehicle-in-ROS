@@ -88,4 +88,4 @@ The dbw_node subscribes to the **/current_velocity topic** along with the **/twi
 
 * /ros/src/waypoint_loader/:A package which loads the static waypoint data and publishes to /base_waypoints.
 
-* /ros/src/waypoint_follower/:A package containing code from Autoware which subscribes to /final_waypoints and publishes target vehicle linear and angular velocities in the form of twist commands to the /twist_cmd topic. 
+* /ros/src/waypoint_follower/:A package containing code from [Autoware](https://github.com/CPFL/Autoware) which subscribes to /final_waypoints and publishes target vehicle linear and angular velocities in the form of twist commands to the /twist_cmd topic. 
