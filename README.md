@@ -80,7 +80,7 @@ The dbw_node subscribes to the **/current_velocity topic** along with the **/twi
 <img src="./img/4.png" alt="twist_controller" />
 <p align="center">
 
-In addition to these packages will find in this directory the following:
+#### In addition to these packages will find in this directory the following:
 
 * /ros/src/styx/: A package that contains a server for communicating with the simulator, and a bridge to translate and publish simulator messages to ROS topics.
 
