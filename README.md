@@ -11,14 +11,14 @@ The project will require the use of Ubuntu Linux (the operating system of Carla)
 
 ### follow the steps below to get set up:
 
-* Because ROS is used, you will need to use Ubuntu to develop and test this project code. You may use
+1. Because ROS is used, you will need to use Ubuntu to develop and test this project code. You may use
 * Ubuntu 14.04 with ROS Indigo 
 * Ubuntu 16.04 with ROS Kinetic
 
-Note: Please use the VM provided in **the [Introduction to ROS]() lesson**. The provided VM has ROS and Dataspeed DBW installed already.
+Note: Please use the VM provided in **the [Introduction to ROS](https://github.com/A2Amir/Introduction-to-ROS--Robot-Operating-System) lesson**. The provided VM has ROS and Dataspeed DBW installed already.
 
-* The project repo can be found h here. In the README, you should be able find any additional dependencies needed for the project.
-* From the the VM provided in **the [Introduction to ROS]() lesson** you can download the linux  version of the simulator here and install it. 
+2. The project repo can be found [here](https://github.com/udacity/CarND-Capstone). In the README, you should be able find any additional dependencies needed for the project.
+3. From the the VM provided in **the [Introduction to ROS](https://github.com/A2Amir/Introduction-to-ROS--Robot-Operating-System) lesson** you can download the linux  version of the simulator [here](https://github.com/udacity/CarND-Capstone/releases) and install it. 
 
 Note that the latest version of the simulator has two test tracks: 
 * A highway test track with traffic lights
