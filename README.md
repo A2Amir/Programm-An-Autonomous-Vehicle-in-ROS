@@ -141,3 +141,65 @@ The /base_waypoints topic publishes a list of all waypoints for the track, so th
 The next section includes details about the message type used to publish to /final_waypoints.
 
 ### Waypoint Message Descriptions
+
+From the code in [PartialWaypointUpdaterNode.py](https://github.com/A2Amir/Program-an-Autonomous-Vehicle/blob/master/Code/PartialWaypointUpdaterNode.py), I can see that both the /final_waypoints and /base_waypoints topics have message type Lane. I can look at the details about this message type in /ros/src/styx_msgs/msg/, but this can also be done from the command line after launching the ROS project using rostopic and rosmsg as follows:
+
+After opening a new terminal window and sourcing devel/setup.bash, I can investigate topics (see [this lesson]( https://github.com/A2Amir/Introduction-to-ROS--Robot-Operating-System) for more information) by executing:
+
+	rostopic list
+	rostopic info /final_waypoints
+	rosmsg info styx_msgs/Lane
+
+the result is:
+
+          std_msgs/Header header
+            uint32 seq
+            time stamp
+            string frame_id
+          styx_msgs/Waypoint[] waypoints
+            geometry_msgs/PoseStamped pose
+              std_msgs/Header header
+                uint32 seq
+                time stamp
+                string frame_id
+              geometry_msgs/Pose pose
+                geometry_msgs/Point position
+                  float64 x
+                  float64 y
+                  float64 z
+                geometry_msgs/Quaternion orientation
+                  float64 x
+                  float64 y
+                  float64 z
+                  float64 w
+            geometry_msgs/TwistStamped twist
+              std_msgs/Header header
+                uint32 seq
+                time stamp
+                string frame_id
+              geometry_msgs/Twist twist
+                geometry_msgs/Vector3 linear
+                  float64 x
+                  float64 y
+                  float64 z
+                geometry_msgs/Vector3 angular
+                  float64 x
+                  float64 y
+                  float64 z
+   
+ 
+ As seen above the messages contain a header and a Waypoint list named waypoints. Each waypoint has pose and twist data. Going further, I can see that twist.twist data contains 3D linear and angular velocities. For more information about twist messages, see [documentation here](http://docs.ros.org/jade/api/geometry_msgs/html/msg/Twist.html).
+ 
+### Topics and message types
+
+For convenience, I have provided the following table with topic and message info for this step of the project:
+
+<p align="center">
+  <img src="./img/5.png" alt="Topics and message types">
+</p>
+
+After implementing and executing the first step of the suggested Order of Project Development I saw the following result:
+<p align="center">
+  <img src="./img/1.png" alt="After implementing and executing the first step of the suggested Order">
+</p>
+
