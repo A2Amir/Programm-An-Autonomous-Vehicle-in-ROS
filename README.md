@@ -195,11 +195,11 @@ the result is:
 For convenience, I have provided the following table with topic and message info for this step of the project:
 
 <p align="center">
-  <img src="./img/5.png" alt="Topics and message types">
+  <img src="./img/5.png" alt="Topics and message types"/>
 </p>
 
 After implementing and executing the first step of the suggested Order of Project Development I saw the following result:
 <p align="center">
-  <img src="./img/1.png" alt="After implementing and executing the first step of the suggested Order">
+  <img src="./img/1.gif" alt="After implementing and executing the first step of the suggested Order"/>
 </p>
 
