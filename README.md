@@ -203,3 +203,42 @@ After implementing and executing the [code](https://github.com/A2Amir/Program-an
   <img src="./img/1.gif" alt="After implementing and executing the first step of the suggested Order"/>
 </p>
 
+## 3.2 DBW Node
+
+Once messages are being published to /final_waypoints, the vehicle's waypoint follower will publish twist commands to the /twist_cmd topic. The goal for this part of the project is to implement the drive-by-wire node ([dbw_node.py](https://github.com/A2Amir/Program-an-Autonomous-Vehicle/blob/master/Code/dbw_node.py)) which will subscribe to /twist_cmd and use various controllers to provide appropriate throttle, brake, and steering commands. These commands can then be published to the following topics:
+
+	•/vehicle/throttle_cmd
+	•/vehicle/brake_cmd
+	•/vehicle/steering_cmd
+
+Since a safety driver may take control of the car during testing, I should not assume that the car is always following my commands. If a safety driver does take over, my PID controller will mistakenly accumulate error, I will need to be mindful of DBW status. The DBW status can be found by subscribing to /vehicle/dbw_enabled. 
+
+All code necessary to implement the drive-by-wire node can be found in the package:
+	
+	../ros/src/twist_controller
+
+### Twist controller package files: within the twist controller package, can be found the following:
+
+* [dbw_node.py](https://github.com/A2Amir/Program-an-Autonomous-Vehicle/blob/master/Code/dbw_node.py): This python file implements the dbw_node publishers and subscribers. I will need to write ROS subscribers for the /current_velocity, /twist_cmd, and /vehicle/dbw_enabled topics. This file also imports the Controller class from [twist_controller.py](https://github.com/A2Amir/Program-an-Autonomous-Vehicle/blob/master/Code/twist_controller.py) which will be used for implementing the necessary controllers. The function used to publish throttle, brake, and steering is publish.
+
+Note that throttle values passed to publish should be in the range 0 to 1, although a throttle of 1 means the vehicle throttle will be fully engaged. Brake values passed to publish should be in units of torque (N*m). The correct values for brake can be computed using the desired acceleration, weight of the vehicle, and wheel radius.
+
+*  [twist_controller.py](https://github.com/A2Amir/Program-an-Autonomous-Vehicle/blob/master/Code/twist_controller.py): This file contains a stub of the Controller class. I can use this class to implement vehicle control. For example, the control method can take twist data as input and return throttle, brake, and steering values. Within this class, I can import and use the provided pid.py and lowpass.py if needed for acceleration, and yaw_controller.py for steering.
+
+* yaw_controller.py:A controller that can be used to convert target linear and angular velocity to steering commands.
+
+* pid.py: A generic PID controller that can be used in twist_controller.py.
+
+* lowpass.py: A generic low pass filter that can be used in twist_controller.py
+
+Note: 
+* dbw_node.py is currently set up to publish steering, throttle, and brake commands at 50hz. The DBW system on Carla expects messages at this frequency, and will disengage (reverting control back to the driver) if control messages are published at less than 10hz (This is a safety feature).
+
+* Self-driving Car in the simulator has an automatic transmission, which means the car will roll forward if no brake and no throttle is applied. To prevent the car from moving requires about 700 Nm of torque.
+
+* The CarND-Capstone/ros/src/waypoint_loader/launch/waypoint_loader.launch file is set up to load the waypoints for the first track. To test using the second track, you will need to change <param name="path" value="$(find styx)../../../data/wp_yaw_const.csv" />
+to use the churchlot_with_cars.csv as follows: <param name="path" value="$(find styx)../../../data/churchlot_with_cars.csv"/>
+
+Check these file ([dbw_node.py](https://github.com/A2Amir/Program-an-Autonomous-Vehicle/blob/master/Code/dbw_node.py), [twist_controller.py](https://github.com/A2Amir/Program-an-Autonomous-Vehicle/blob/master/Code/twist_controller.py) ) to get more familiar with the DBW Node and twist Controller.
+
+
