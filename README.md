@@ -244,4 +244,12 @@ to use the churchlot_with_cars.csv as follows: <param name="path" value="$(find 
 
 Check these file ([dbw_node.py](https://github.com/A2Amir/Program-an-Autonomous-Vehicle/blob/master/Code/dbw_node.py), [twist_controller.py](https://github.com/A2Amir/Program-an-Autonomous-Vehicle/blob/master/Code/twist_controller.py) ) to get more familiar with the DBW Node and twist Controller.
 
+## 3.3 Traffic Light Detection
+#### Detection:
+For the first phase of  the Traffic light Detection please check this Repository.
+
+#### Waypoint publishing:
+As said before once I have correctly identified the traffic light and determined its position, I can convert it to a waypoint index and publish it. check this [code]() to get more familiar with this phase.
+
+
 
