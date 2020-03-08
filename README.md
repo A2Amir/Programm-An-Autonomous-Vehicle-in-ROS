@@ -7,7 +7,7 @@ The goal of this project is to enable Karla (the Udacity’ car) to drive around
 
 * In the control subsystem, I'll implement a drive by wire ROS node that takes target trajectory information is input, in sense, control commands to navigate the vehicle.
 
-The project will require the use of Ubuntu Linux (the operating system of Carla) and a ROS framework for these nodes, as well as a version of the simulator that includes traffic lights and obstacles. 
+The project will require the use of Ubuntu Linux (the operating system of Carla) and a ROS framework for these nodes, as well as a version of the simulator that includes traffic lights. 
 
 ### follow the steps below to get set up:
 
@@ -252,5 +252,23 @@ For the first phase of  the Traffic light Detection please check this [Repositor
 * #### Waypoint publishing:
 
 As said before once I have correctly identified the traffic light and determined its position using [a classifier](https://github.com/A2Amir/Programm-An-Autonomous-Vehicle-in-ROS/blob/master/ros/src/tl_detector/light_classification/tl_classifier.py) that I have built using TensorFlow, I can convert it to a waypoint index and publish it. check [this code](https://github.com/A2Amir/Programm-An-Autonomous-Vehicle-in-ROS/blob/master/ros/src/tl_detector/tl_detector.py)to go over the structure of the code for publishing the closest waypoint.
+
+## 3.4 Waypoint Updater Node (Full)
+
+Once traffic light detection is working properly, I can incorporate the traffic light data into  [waypoint my updater node](). To do this, I will need to add a subscriber for the /traffic_waypoint topic and implement the traffic_cb callback for this subscriber.
+
+There are several helpful methods that can use:
+
+* get_waypoint_velocity(self, waypoint): gets the linear velocity (x-direction) for a single waypoint.
+
+
+* set_waypoint_velocity(self, waypoints, waypoint, velocity): sets the linear velocity (x-direction) for a single waypoint in a list of waypoints. Here, waypoints is a list of waypoints, waypoint is a waypoint index in the list, and velocity is the desired velocity.
+
+* 	distance(self, waypoints, wp1, wp2): Computes the distance between two waypoints in a list along the piecewise linear arc connecting all waypoints between the two. Here, waypoints is a list of waypoints, and wp1 and wp2 are the indices of two waypoints in the list. This method may be helpful in determining the velocities for a sequence of waypoints leading up to a red light (the velocities should gradually decrease to zero starting some distance from the light).
+
+To accomplish this part of the project successfully, I will need to adjust the target velocities for the waypoints leading up to red traffic lights in order to bring the vehicle to a smooth and full stop. I should aim to have a smooth decrease in velocity leading up to the stopping point. 
+
+It will be up to me determine what the deceleration should be for the vehicle, and how this deceleration corresponds to waypoint target velocities. As in the [Path Planning project](https://github.com/A2Amir/Highway-Driving), acceleration should not exceed 10 m/s^2 and jerk should not exceed 10 m/s^3. check these function accelerate_to_target_velocity and stop_at_stop_line in [the waypoint updater](https://github.com/A2Amir/Programm-An-Autonomous-Vehicle-in-ROS/blob/master/ros/src/waypoint_updater/waypoint_updater.py) to get more familiar.
+
 
 
