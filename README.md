@@ -1,5 +1,7 @@
+
+
 # 1. Introduction
-The goal of this project is to enable Karla (the Udacity’ car) to drive around the test track using waypoint navigation.  I'll be implementing components of the perception,planning, and control subsystems.
+The goal of this project is to to programm the Karla (the Udacity’ car) to drive itself around the test track using components of the perception, planning and control subsystems which will be implemented in the Robot Operation System. Please check these Repos (1.[Introduction to ROS-Robot-Operating-System](https://github.com/A2Amir/Introduction-to-ROS--Robot-Operating-System), 2.[Catkin Workspace for ROS](https://github.com/A2Amir/Catkin-Workspace-for-ROS) 3. [Writing-ROS-Nodes](https://github.com/A2Amir/Writing-ROS-Nodes) ) to get familiar with the ROS before starting the project.
 
 * In the perception subsystem, I'll implement traffic light detection detection.
 
