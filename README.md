@@ -64,7 +64,7 @@ The following is a system architecture diagram showing the ROS nodes and topics 
 Below is a brief overview of the repo structure, along with descriptions of the ROS nodes. Within this directory /ros/src/, you will find the following ROS packages:
 
 
-#### 1. /ros/src/tl_detector/
+#### 1. ./code/ros/src/tl_detector/
 
 This package contains the traffic light detection node: **tl_detector.py**. This node takes in data from the **/image_color, /current_pose, and /base_waypoints topics** and publishes the locations to stop for red traffic lights to the **/traffic_waypoint topic**.
 The **/current_pose** topic provides the vehicle's current position, and **/base_waypoints** provides a complete list of waypoints the car will be following.
@@ -78,7 +78,7 @@ l build both a traffic light detection node and a traffic light classification n
           
           
           
-#### 2. /ros/src/waypoint_updater/
+#### 2. ./code/ros/src/waypoint_updater/
 This package contains the waypoint updater node: **waypoint_updater.py**. The purpose of this node is to update the target velocity property of each waypoint based on traffic light and obstacle detection data. This node will subscribe to **the /base_waypoints, /current_pose, /obstacle_waypoint, and /traffic_waypoint topics**, and publish a list of waypoints ahead of the car with target velocities to **the /final_waypoints** topic.
 
 
@@ -89,7 +89,7 @@ This package contains the waypoint updater node: **waypoint_updater.py**. The pu
 Note: Waypoints are simply an ordered set of coordinates that Karla uses to plan a path around the track. Each of these waypoints also has an associated target velocity. Karla's planning subsystem updates the target velocity for the waypoints ahead of the vehicle depending on the desired vehicle behavior.
 
 
-#### 3. /ros/src/twist_controller/
+#### 3. ./code/ros/src/twist_controller/
 
 Carla is equipped with a drive-by-wire (dbw) system, meaning the throttle, brake and steering have electronic control. This package contains the files that are responsible for control of the vehicle: the node dbw_node.py and the file twist_controller.py, along with a pid and lowpass filter that I can use in my implementation. 
 
@@ -101,13 +101,13 @@ The dbw_node subscribes to the **/current_velocity topic** along with the **/twi
 
 #### In addition to these packages will find in this directory the following:
 
-* /ros/src/styx/: A package that contains a server for communicating with the simulator, and a bridge to translate and publish simulator messages to ROS topics.
+* ./code/ros/src/styx/: A package that contains a server for communicating with the simulator, and a bridge to translate and publish simulator messages to ROS topics.
 
-* /ros/src/styx_msgs/:A package which includes definitions of the custom ROS message types used in the project.
+* ./code/ros/src/styx_msgs/:A package which includes definitions of the custom ROS message types used in the project.
 
-* /ros/src/waypoint_loader/:A package which loads the static waypoint data and publishes to /base_waypoints.
+* /code/ros/src/waypoint_loader/:A package which loads the static waypoint data and publishes to /base_waypoints.
 
-* /ros/src/waypoint_follower/:A package containing code from [Autoware](https://github.com/CPFL/Autoware) which subscribes to /final_waypoints and publishes target vehicle linear and angular velocities in the form of twist commands to the /twist_cmd topic. 
+* /code/ros/src/waypoint_follower/:A package containing code from [Autoware](https://github.com/CPFL/Autoware) which subscribes to /final_waypoints and publishes target vehicle linear and angular velocities in the form of twist commands to the /twist_cmd topic. 
 
 
 # 3. Suggested Order of Project Development
@@ -142,7 +142,7 @@ The next section includes details about the message type used to publish to /fin
 
 ### Waypoint Message Descriptions
 
-From the code in [PartialWaypointUpdaterNode.py](https://github.com/A2Amir/Program-an-Autonomous-Vehicle/blob/master/Code/PartialWaypointUpdaterNode.py), I can see that both the /final_waypoints and /base_waypoints topics have message type Lane. I can look at the details about this message type in /ros/src/styx_msgs/msg/, but this can also be done from the command line after launching the ROS project using rostopic and rosmsg as follows:
+From the code in [WaypointUpdaterNode.py](https://github.com/A2Amir/Programm-An-Autonomous-Vehicle-in-ROS/blob/master/code/ros/src/waypoint_updater/waypoint_updater.py), I can see that both the /final_waypoints and /base_waypoints topics have message type Lane. I can look at the details about this message type in /code/ros/src/styx_msgs/msg/, but this can also be done from the command line after launching the ROS project using rostopic and rosmsg as follows:
 
 After opening a new terminal window and sourcing devel/setup.bash, I can investigate topics (see [this lesson]( https://github.com/A2Amir/Introduction-to-ROS--Robot-Operating-System) for more information) by executing:
 
@@ -198,14 +198,14 @@ For convenience, I have provided the following table with topic and message info
   <img src="./img/5.png" alt="Topics and message types"/>
 </p>
 
-After implementing and executing the [code](https://github.com/A2Amir/Program-an-Autonomous-Vehicle/blob/master/Code/PartialWaypointUpdaterNode.py) for the first step of the suggested Order of Project Development I saw the following result:
+After implementing and executing the [code](https://github.com/A2Amir/Programm-An-Autonomous-Vehicle-in-ROS/blob/master/code/ros/src/waypoint_updater/waypoint_updater.py) for the first step of the suggested Order of Project Development I saw the following result:
 <p align="center">
   <img src="./img/1.gif" alt="After implementing and executing the first step of the suggested Order"/>
 </p>
 
 ## 3.2 DBW Node
 
-Once messages are being published to /final_waypoints, the vehicle's waypoint follower will publish twist commands to the /twist_cmd topic. The goal for this part of the project is to implement the drive-by-wire node ([dbw_node.py](https://github.com/A2Amir/Program-an-Autonomous-Vehicle/blob/master/Code/dbw_node.py)) which will subscribe to /twist_cmd and use various controllers to provide appropriate throttle, brake, and steering commands. These commands can then be published to the following topics:
+Once messages are being published to /final_waypoints, the vehicle's waypoint follower will publish twist commands to the /twist_cmd topic. The goal for this part of the project is to implement the drive-by-wire node ([dbw_node.py](https://github.com/A2Amir/Programm-An-Autonomous-Vehicle-in-ROS/blob/master/code/ros/src/twist_controller/dbw_node.py)) which will subscribe to /twist_cmd and use various controllers to provide appropriate throttle, brake, and steering commands. These commands can then be published to the following topics:
 
 	•/vehicle/throttle_cmd
 	•/vehicle/brake_cmd
@@ -221,11 +221,11 @@ All code necessary to implement the drive-by-wire node can be found in the packa
 
 **within the twist controller package, can be found the following:**
 
-* [dbw_node.py](https://github.com/A2Amir/Program-an-Autonomous-Vehicle/blob/master/Code/dbw_node.py): This python file implements the dbw_node publishers and subscribers. I will need to write ROS subscribers for the /current_velocity, /twist_cmd, and /vehicle/dbw_enabled topics. This file also imports the Controller class from [twist_controller.py](https://github.com/A2Amir/Program-an-Autonomous-Vehicle/blob/master/Code/twist_controller.py) which will be used for implementing the necessary controllers. The function used to publish throttle, brake, and steering is publish.
+* [dbw_node.py](https://github.com/A2Amir/Programm-An-Autonomous-Vehicle-in-ROS/blob/master/code/ros/src/twist_controller/dbw_node.py): This python file implements the dbw_node publishers and subscribers. I will need to write ROS subscribers for the /current_velocity, /twist_cmd, and /vehicle/dbw_enabled topics. This file also imports the Controller class from [twist_controller.py](https://github.com/A2Amir/Programm-An-Autonomous-Vehicle-in-ROS/blob/master/code/ros/src/twist_controller/twist_controller.py) which will be used for implementing the necessary controllers. The function used to publish throttle, brake, and steering is publish.
 	
 	Note that throttle values passed to publish should be in the range 0 to 1, although a throttle of 1 means the vehicle throttle will be fully engaged. Brake values passed to publish should be in units of torque (N*m). The correct values for brake can be computed using the desired acceleration, weight of the vehicle, and wheel radius.
 
-*  [twist_controller.py](https://github.com/A2Amir/Program-an-Autonomous-Vehicle/blob/master/Code/twist_controller.py): This file contains a stub of the Controller class. I can use this class to implement vehicle control. For example, the control method can take twist data as input and return throttle, brake, and steering values. Within this class, I can import and use the provided pid.py and lowpass.py if needed for acceleration, and yaw_controller.py for steering.
+*  [twist_controller.py](https://github.com/A2Amir/Programm-An-Autonomous-Vehicle-in-ROS/blob/master/code/ros/src/twist_controller/twist_controller.py): This file contains a stub of the Controller class. I can use this class to implement vehicle control. For example, the control method can take twist data as input and return throttle, brake, and steering values. Within this class, I can import and use the provided pid.py and lowpass.py if needed for acceleration, and yaw_controller.py for steering.
 
 * yaw_controller.py: A controller that can be used to convert target linear and angular velocity to steering commands.
 
@@ -242,14 +242,14 @@ Note:
 * The CarND-Capstone/ros/src/waypoint_loader/launch/waypoint_loader.launch file is set up to load the waypoints for the first track. To test using the second track, you will need to change <param name="path" value="$(find styx)../../../data/wp_yaw_const.csv" />
 to use the churchlot_with_cars.csv as follows: <param name="path" value="$(find styx)../../../data/churchlot_with_cars.csv"/>
 
-Check these file ([dbw_node.py](https://github.com/A2Amir/Program-an-Autonomous-Vehicle/blob/master/Code/dbw_node.py), [twist_controller.py](https://github.com/A2Amir/Program-an-Autonomous-Vehicle/blob/master/Code/twist_controller.py) ) to get more familiar with the DBW Node and twist Controller.
+Check these file ([dbw_node.py](https://github.com/A2Amir/Programm-An-Autonomous-Vehicle-in-ROS/blob/master/code/ros/src/twist_controller/dbw_node.py), [twist_controller.py](https://github.com/A2Amir/Programm-An-Autonomous-Vehicle-in-ROS/blob/master/code/ros/src/twist_controller/twist_controller.py) ) to get more familiar with the DBW Node and twist Controller.
 
 ## 3.3 Traffic Light Detection
 * #### Detection:
 For the first phase of  the Traffic light Detection please check this [Repository](https://github.com/A2Amir/Traditional-Object-Detection).
 
 * #### Waypoint publishing:
-As said before once I have correctly identified the traffic light and determined its position, I can convert it to a waypoint index and publish it. check this [code]() to get more familiar with this phase.
 
+As said before once I have correctly identified the traffic light and determined its position using [a classifier](https://github.com/A2Amir/Programm-An-Autonomous-Vehicle-in-ROS/blob/master/code/ros/src/tl_detector/light_classification/tl_classifier.py) that I have built using TensorFlow, I can convert it to a waypoint index and publish it. check [this code](https://github.com/A2Amir/Programm-An-Autonomous-Vehicle-in-ROS/blob/master/code/ros/src/tl_detector/tl_detector.py)to go over the structure of the code for publishing the closest waypoint.
 
 
