@@ -1,7 +1,7 @@
-# 1. Introduction
+﻿# 1. Introduction
 The goal of this project is to enable Karla (the Udacity’ car) to drive around the test track using waypoint navigation.  I'll be implementing components of the perception,planning, and control subsystems.
 
-* In the perception subsystem, I'll implement traffic light detection and obstacle detection.
+* In the perception subsystem, I'll implement traffic light detection detection.
 
 * In the planning subsystem, I'll implement a node called the waypoint updater. This node sets the target velocity for each waypoint based on the upcoming traffic lights and obstacles. For example, if the car sees a red traffic light on the horizon will to set decelerating velocities at the nodes leading up to that traffic light.
 
