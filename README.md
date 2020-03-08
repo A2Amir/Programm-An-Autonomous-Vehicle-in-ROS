@@ -273,7 +273,7 @@ To accomplish this part of the project successfully, I will need to adjust the t
 It will be up to me determine what the deceleration should be for the vehicle, and how this deceleration corresponds to waypoint target velocities. As in the [Path Planning project](https://github.com/A2Amir/Highway-Driving), acceleration should not exceed 10 m/s^2 and jerk should not exceed 10 m/s^3. check these function accelerate_to_target_velocity and stop_at_stop_line in [the waypoint updater](https://github.com/A2Amir/Programm-An-Autonomous-Vehicle-in-ROS/blob/master/ros/src/waypoint_updater/waypoint_updater.py) to get more familiar.
 
 # 4. Result
-Below is presented the result of executing the codes in the simulator. As seen the cars stopts at the traffic light when the light is red.
+Below is presented the result of executing the codes in the simulator. As seen the car stopts at the traffic light when the light is red.
 
 <p align="center">
 <img src="./imgs/2.gif" alt="Result" />
